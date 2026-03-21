@@ -10,6 +10,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] =
     useState<(typeof sectionIds)[number]>("home");
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const hasScrolledRef = useRef(false);
   const navLinksRef = useRef<HTMLUListElement | null>(null);
@@ -30,14 +32,6 @@ export default function Navbar() {
       }
 
       setIsOpen(false);
-    }
-
-    function updateScrollState() {
-      setIsScrolled(window.scrollY > 60);
-    }
-
-    function markScrolled() {
-      hasScrolledRef.current = true;
     }
 
     function handleResize() {
@@ -67,20 +61,38 @@ export default function Navbar() {
     );
 
     document.addEventListener("click", closeOnOutsideClick);
-    window.addEventListener("scroll", markScrolled, { once: true });
-    window.addEventListener("scroll", updateScrollState);
     window.addEventListener("resize", handleResize);
     sections.forEach((section) => observer.observe(section));
-    updateScrollState();
 
     return () => {
       document.removeEventListener("click", closeOnOutsideClick);
-      window.removeEventListener("scroll", markScrolled);
-      window.removeEventListener("scroll", updateScrollState);
       window.removeEventListener("resize", handleResize);
       observer.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      hasScrolledRef.current = true;
+      setIsScrolled(currentScrollY > 50);
+
+      if (currentScrollY < 10) {
+        setIsVisible(true);
+      } else if (currentScrollY < lastScrollY - 10) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY + 10) {
+        setIsVisible(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   function handleNavClick() {
     if (window.innerWidth < 980) {
@@ -98,13 +110,14 @@ export default function Navbar() {
 
   return (
     <nav
-      className="site-nav"
+      className={`site-nav transition-transform duration-300 ease-in-out ${
+        isScrolled
+          ? "bg-[rgba(13,31,60,0.85)] backdrop-blur-md border-b border-white/8"
+          : "bg-transparent border-transparent"
+      }`}
       aria-label="Primary"
       style={{
-        boxShadow: isScrolled ? "0 2px 20px rgba(0,0,0,0.3)" : "none",
-        borderBottomColor: isScrolled
-          ? "rgba(203,213,225,0.25)"
-          : "rgba(203,213,225,0.14)",
+        transform: isVisible ? "translateY(0)" : "translateY(-100%)",
       }}
     >
       <div className="container nav-inner">

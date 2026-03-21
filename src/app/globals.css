@@ -86,11 +86,12 @@ a {
 }
 
 .site-nav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
-  background: #0d1f3c;
-  border-bottom: 1px solid rgba(203, 213, 225, 0.14);
+  border-bottom: 1px solid transparent;
 }
 
 .nav-inner {
@@ -244,6 +245,7 @@ a {
   overflow: hidden;
   background: #0a1628;
   color: var(--text-light);
+  padding-top: var(--nav-height);
 }
 
 .hero-images {
@@ -562,6 +564,64 @@ a {
   font-weight: 700;
   flex: 0 0 auto;
   line-height: 1.2;
+}
+
+.auth-accordion {
+  width: 100%;
+  margin-top: 0.75rem;
+}
+
+.auth-accordion-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.9rem 2rem;
+  background: #1a56db;
+  color: white;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.auth-accordion-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.auth-accordion-arrow {
+  transition: transform 0.3s ease;
+  font-size: 0.8rem;
+}
+
+details[open] .auth-accordion-arrow {
+  transform: rotate(180deg);
+}
+
+.auth-accordion-content {
+  margin-top: 0.9rem;
+  border: 1px solid #dbe3ef;
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 1rem;
+}
+
+.auth-accordion-content ul {
+  list-style: none;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.auth-accordion-content li {
+  border: 1px solid #dbe3ef;
+  border-radius: 10px;
+  background: #fff;
+  padding: 0.9rem 0.95rem;
+  color: #1e293b;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 #references {
