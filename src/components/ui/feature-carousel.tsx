@@ -36,11 +36,7 @@ export default function FeatureCarousel({ entries }: FeatureCarouselProps) {
     const autoScrollTimer = window.setInterval(() => {
       setCurrentIndex((current) => {
         const nextIndex = current === entries.length - 1 ? 0 : current + 1;
-        cardRefs.current[nextIndex]?.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-          inline: "start",
-        });
+        scrollTrackToIndex(nextIndex);
         return nextIndex;
       });
     }, 4000);
@@ -62,12 +58,22 @@ export default function FeatureCarousel({ entries }: FeatureCarouselProps) {
     };
   }, []);
 
-  function scrollToIndex(index: number) {
-    cardRefs.current[index]?.scrollIntoView({
+  function scrollTrackToIndex(index: number) {
+    const track = trackRef.current;
+    const card = cardRefs.current[index];
+
+    if (!track || !card) {
+      return;
+    }
+
+    track.scrollTo({
+      left: card.offsetLeft,
       behavior: "smooth",
-      block: "nearest",
-      inline: "start",
     });
+  }
+
+  function scrollToIndex(index: number) {
+    scrollTrackToIndex(index);
     window.setTimeout(() => {
       setCurrentIndex(index);
     }, 280);
