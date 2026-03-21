@@ -11,10 +11,14 @@ export default function Navbar() {
   const [activeSection, setActiveSection] =
     useState<(typeof sectionIds)[number]>("home");
   const [isScrolled, setIsScrolled] = useState(false);
+  const hasScrolledRef = useRef(false);
   const navLinksRef = useRef<HTMLUListElement | null>(null);
   const hamburgerRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
+    setActiveSection("home");
+    hasScrolledRef.current = false;
+
     function closeOnOutsideClick(event: MouseEvent) {
       const target = event.target as Node;
 
@@ -28,8 +32,12 @@ export default function Navbar() {
       setIsOpen(false);
     }
 
-    function handleScroll() {
+    function updateScrollState() {
       setIsScrolled(window.scrollY > 60);
+    }
+
+    function markScrolled() {
+      hasScrolledRef.current = true;
     }
 
     function handleResize() {
@@ -45,7 +53,7 @@ export default function Navbar() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
+          if (!entry.isIntersecting || !hasScrolledRef.current) {
             return;
           }
 
@@ -59,14 +67,16 @@ export default function Navbar() {
     );
 
     document.addEventListener("click", closeOnOutsideClick);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", markScrolled, { once: true });
+    window.addEventListener("scroll", updateScrollState);
     window.addEventListener("resize", handleResize);
     sections.forEach((section) => observer.observe(section));
-    handleScroll();
+    updateScrollState();
 
     return () => {
       document.removeEventListener("click", closeOnOutsideClick);
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", markScrolled);
+      window.removeEventListener("scroll", updateScrollState);
       window.removeEventListener("resize", handleResize);
       observer.disconnect();
     };

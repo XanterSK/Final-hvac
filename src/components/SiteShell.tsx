@@ -16,6 +16,10 @@ type SiteShellProps = {
 
 export default function SiteShell({ carouselEntries }: SiteShellProps) {
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const revealElements = Array.from(
       document.querySelectorAll<HTMLElement>(".reveal"),
     );
