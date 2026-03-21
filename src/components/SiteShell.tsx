@@ -8,13 +8,8 @@ import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import References from "@/components/References";
 import Services from "@/components/Services";
-import type { CarouselEntry } from "@/components/ui/feature-carousel";
 
-type SiteShellProps = {
-  carouselEntries: CarouselEntry[];
-};
-
-export default function SiteShell({ carouselEntries }: SiteShellProps) {
+export default function SiteShell() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -48,7 +43,7 @@ export default function SiteShell({ carouselEntries }: SiteShellProps) {
       <Navbar />
       <Hero />
       <Services />
-      <References carouselEntries={carouselEntries} />
+      <References />
       <Contact />
       <Footer />
       <CookieBanner />

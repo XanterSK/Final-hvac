@@ -1,16 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import FeatureCarousel, {
-  type CarouselEntry,
-} from "@/components/ui/feature-carousel";
+import FeatureCarousel from "@/components/ui/feature-carousel";
 import { useLanguage } from "@/context/LanguageContext";
 
-type ReferencesProps = {
-  carouselEntries: CarouselEntry[];
-};
-
-export default function References({ carouselEntries }: ReferencesProps) {
+export default function References() {
   const { lang, t } = useLanguage();
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -72,7 +66,7 @@ export default function References({ carouselEntries }: ReferencesProps) {
         <h3 className="subsection-title reveal">
           {t("referencesProjectsFrom2017")}
         </h3>
-        <FeatureCarousel entries={carouselEntries} />
+        <FeatureCarousel />
 
         <div className={`accordion reveal${isAccordionOpen ? " is-open" : ""}`}>
           <button
