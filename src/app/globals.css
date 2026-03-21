@@ -528,9 +528,7 @@ a {
 }
 
 .accordion-panel {
-  max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s ease;
 }
 
 .accordion-card {

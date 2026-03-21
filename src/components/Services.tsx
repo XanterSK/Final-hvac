@@ -1,16 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
+import { Settings, Snowflake } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 const authorisationIcons = ["✓", "🛡", "✓", "🛡", "✓", "🛡", "✓", "🛡", "✓"];
 
 export default function Services() {
-  const { lang, t } = useLanguage();
+  const { t } = useLanguage();
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
-  const panelRef = useRef<HTMLDivElement | null>(null);
-  const [panelHeight, setPanelHeight] = useState(0);
 
   const consultingItems = [
     {
@@ -74,17 +73,6 @@ export default function Services() {
     return () => document.removeEventListener("click", closeServicePopups);
   }, []);
 
-  useEffect(() => {
-    function updatePanelHeight() {
-      setPanelHeight(panelRef.current?.scrollHeight ?? 0);
-    }
-
-    updatePanelHeight();
-    window.addEventListener("resize", updatePanelHeight);
-
-    return () => window.removeEventListener("resize", updatePanelHeight);
-  }, [lang]);
-
   function handleServiceItemClick(
     event: MouseEvent<HTMLButtonElement>,
     itemId: string,
@@ -96,14 +84,12 @@ export default function Services() {
   return (
     <section id="services" className="section">
       <div className="container">
-        <h2 className="section-title reveal">{t("servicesTitle")}</h2>
+        <h2 className="section-title reveal visible">{t("servicesTitle")}</h2>
 
         <div className="service-grid">
           <article className="service-card reveal">
             <div className="service-icon-box">
-              <span className="service-icon" aria-hidden="true">
-                ❄
-              </span>
+              <Snowflake className="service-icon" aria-hidden="true" size={22} />
             </div>
             <h3>{t("servicesConsultingTitle")}</h3>
             <ul>
@@ -131,9 +117,7 @@ export default function Services() {
 
           <article className="service-card reveal">
             <div className="service-icon-box">
-              <span className="service-icon" aria-hidden="true">
-                ⚙
-              </span>
+              <Settings className="service-icon" aria-hidden="true" size={22} />
             </div>
             <h3>{t("servicesProjectTitle")}</h3>
             <ul>
@@ -174,10 +158,14 @@ export default function Services() {
             </span>
           </button>
           <div
-            ref={panelRef}
             className="accordion-panel"
             id="authorisations-panel"
-            style={{ maxHeight: isAccordionOpen ? `${panelHeight}px` : "0px" }}
+            aria-hidden={!isAccordionOpen}
+            style={{
+              maxHeight: isAccordionOpen ? "2000px" : "0px",
+              overflow: "hidden",
+              transition: "max-height 0.4s ease",
+            }}
           >
             <div className="accordion-card">
               <ul className="auth-list">

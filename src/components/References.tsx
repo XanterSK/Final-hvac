@@ -1,14 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import FeatureCarousel from "@/components/ui/feature-carousel";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function References() {
-  const { lang, t } = useLanguage();
+  const { t } = useLanguage();
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
-  const panelRef = useRef<HTMLDivElement | null>(null);
-  const [panelHeight, setPanelHeight] = useState(0);
 
   const experienceItems = [
     t("experience1"),
@@ -47,17 +45,6 @@ export default function References() {
     t("experience34"),
   ];
 
-  useEffect(() => {
-    function updatePanelHeight() {
-      setPanelHeight(panelRef.current?.scrollHeight ?? 0);
-    }
-
-    updatePanelHeight();
-    window.addEventListener("resize", updatePanelHeight);
-
-    return () => window.removeEventListener("resize", updatePanelHeight);
-  }, [lang]);
-
   return (
     <section id="references" className="section">
       <div className="container">
@@ -82,10 +69,14 @@ export default function References() {
             </span>
           </button>
           <div
-            ref={panelRef}
             className="accordion-panel"
             id="experience-panel"
-            style={{ maxHeight: isAccordionOpen ? `${panelHeight}px` : "0px" }}
+            aria-hidden={!isAccordionOpen}
+            style={{
+              maxHeight: isAccordionOpen ? "2000px" : "0px",
+              overflow: "hidden",
+              transition: "max-height 0.4s ease",
+            }}
           >
             <div className="accordion-card">
               <ul className="experience-list">
