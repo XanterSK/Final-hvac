@@ -79,6 +79,14 @@ export default function Contact() {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
+            <a
+              className="contact-map-link"
+              href="https://maps.google.com/?q=Tylova%201042/11,%20831%2004%20Bratislava"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t("contactOpenMaps")}
+            </a>
             <div className="contact-bottom">
               <hr className="contact-divider" />
               <p className="contact-response">{t("contactResponseTime")}</p>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, type MouseEvent } from "react";
-import { Settings, Snowflake } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Services() {
@@ -73,9 +72,7 @@ export default function Services() {
 
         <div className="service-grid">
           <article className="service-card reveal">
-            <div className="service-icon-box">
-              <Snowflake className="service-icon" aria-hidden="true" size={22} />
-            </div>
+            <div className="service-rule" aria-hidden="true" />
             <h3>{t("servicesConsultingTitle")}</h3>
             <ul>
               {consultingItems.map((item) => (
@@ -101,9 +98,7 @@ export default function Services() {
           </article>
 
           <article className="service-card reveal">
-            <div className="service-icon-box">
-              <Settings className="service-icon" aria-hidden="true" size={22} />
-            </div>
+            <div className="service-rule" aria-hidden="true" />
             <h3>{t("servicesProjectTitle")}</h3>
             <ul>
               {projectItems.map((item) => (

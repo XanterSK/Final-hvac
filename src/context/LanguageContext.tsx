@@ -113,6 +113,7 @@ export const translations = {
     contactTitle: "Contact",
     contactCompany: "HVAC & BMS s.r.o.",
     contactAddress: "Tylova 1042/11, 831 04 Bratislava",
+    contactOpenMaps: "Open in Maps",
     contactResponseTime: "We respond within 1 business day",
     contactName: "Name",
     contactEmail: "Email",
@@ -121,7 +122,7 @@ export const translations = {
     contactSend: "Send",
     contactSuccess: "Thank you for your message. We will get back to you shortly.",
     footerCopyright:
-      "© Copyright 2024 HVAC & BMS, s.r.o. All Rights Reserved",
+      "© Copyright 2025 HVAC & BMS, s.r.o. All Rights Reserved",
   },
   sk: {
     navHome: "Domov",
@@ -225,6 +226,7 @@ export const translations = {
     contactTitle: "Kontakt",
     contactCompany: "HVAC & BMS s.r.o.",
     contactAddress: "Tylova 1042/11, 831 04 Bratislava",
+    contactOpenMaps: "Otvoriť v Mapách",
     contactResponseTime: "Odpovedáme do 1 pracovného dňa",
     contactName: "Meno",
     contactEmail: "Email",
@@ -233,7 +235,7 @@ export const translations = {
     contactSend: "Odoslať",
     contactSuccess: "Ďakujeme za vašu správu. Čoskoro vás budeme kontaktovať.",
     footerCopyright:
-      "© Copyright 2024 HVAC & BMS, s.r.o. Všetky práva vyhradené",
+      "© Copyright 2025 HVAC & BMS, s.r.o. Všetky práva vyhradené",
   },
 } as const;
 

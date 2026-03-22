@@ -124,10 +124,10 @@ export function FeatureCarousel() {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="relative overflow-hidden rounded-[2.5rem] border border-white/8 bg-transparent lg:rounded-[4rem] flex flex-col lg:flex-row min-h-[600px] lg:aspect-video">
-        <div className="w-full lg:w-[40%] min-h-[350px] md:min-h-[450px] lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-8 md:px-16 lg:pl-16 bg-[#0d1f3c] ">
-          <div className="absolute inset-x-0 top-0 h-12 md:h-20 lg:h-16 bg-gradient-to-b from-[#0d1f3c] via-[#0d1f3c]/80 to-transparent z-40" />
-          <div className="absolute inset-x-0 bottom-0 h-12 md:h-20 lg:h-16 bg-gradient-to-t from-[#0d1f3c] via-[#0d1f3c]/80 to-transparent z-40" />
+      <div className="relative flex min-h-[600px] flex-col overflow-hidden rounded-[2.5rem] border border-[rgba(184,151,90,0.14)] bg-transparent lg:aspect-video lg:flex-row lg:rounded-[4rem]">
+        <div className="relative z-30 flex min-h-[350px] w-full flex-col items-start justify-center overflow-hidden bg-[#111110] px-8 md:min-h-[450px] md:px-16 lg:h-full lg:w-[40%] lg:pl-16">
+          <div className="absolute inset-x-0 top-0 z-40 h-12 bg-gradient-to-b from-[#111110] via-[#111110]/80 to-transparent md:h-20 lg:h-16" />
+          <div className="absolute inset-x-0 bottom-0 z-40 h-12 bg-gradient-to-t from-[#111110] via-[#111110]/80 to-transparent md:h-20 lg:h-16" />
           <div className="relative w-full h-full flex items-center justify-center z-20">
             {FEATURES.map((feature, index) => {
               const isActive = index === currentIndex;
@@ -163,8 +163,8 @@ export function FeatureCarousel() {
                     className={cn(
                       "relative flex h-[52px] w-full items-center justify-center rounded-full border px-6 text-center transition-all duration-700 md:h-[60px] md:px-8 lg:h-[56px]",
                       isActive
-                        ? "bg-[#1a56db] text-white border-[#1a56db] z-10"
-                        : "bg-transparent text-white/60 border-white/20 hover:border-white/40 hover:text-white"
+                        ? "z-10 border-[#b8975a] bg-transparent text-[#b8975a]"
+                        : "border-[rgba(184,151,90,0.12)] bg-[#141412] text-[#f0ece4]/55 hover:border-[rgba(184,151,90,0.28)] hover:text-[#f0ece4]"
                     )}
                   >
                     <span className="block w-full text-center text-sm font-normal uppercase tracking-tight md:text-[15px]">
@@ -177,7 +177,7 @@ export function FeatureCarousel() {
           </div>
         </div>
 
-        <div className="relative flex-1 min-h-[500px] overflow-hidden border-t border-white/8 bg-[#111f38] px-6 py-16 md:min-h-[600px] md:px-12 md:py-24 lg:h-full lg:border-t-0 lg:border-l lg:px-10 lg:py-16 flex items-center justify-center">
+        <div className="relative flex min-h-[500px] flex-1 items-center justify-center overflow-hidden border-t border-[rgba(184,151,90,0.12)] bg-[#111110] px-6 py-16 md:min-h-[600px] md:px-12 md:py-24 lg:h-full lg:border-t-0 lg:border-l lg:px-10 lg:py-16">
           <div className="relative w-full max-w-[420px] aspect-[4/5] flex items-center justify-center">
             {FEATURES.map((feature, index) => {
               const status = getCardStatus(index);
@@ -203,7 +203,7 @@ export function FeatureCarousel() {
                     damping: 28,
                     mass: 0.95,
                   }}
-                  className="absolute inset-0 origin-center overflow-hidden rounded-[2rem] border-4 border-white/8 bg-[#1a2f4a] transform-gpu md:rounded-[2.8rem] md:border-8"
+                  className="absolute inset-0 origin-center overflow-hidden rounded-[2rem] border border-[rgba(184,151,90,0.1)] bg-[#161613] transform-gpu md:rounded-[2.8rem]"
                   style={{ willChange: "transform, opacity" }}
                 >
                   <img

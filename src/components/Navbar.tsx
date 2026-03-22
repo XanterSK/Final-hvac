@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLanguage, type Language } from "@/context/LanguageContext";
+import { ComesInGoesOutUnderline } from "@/components/ui/underline-animation";
 
 const sectionIds = ["home", "services", "references", "contact"] as const;
 
@@ -130,11 +131,18 @@ export default function Navbar() {
     }
   }
 
+  const navItems = [
+    { id: "home", label: t("navHome") },
+    { id: "services", label: t("navServices") },
+    { id: "references", label: t("navReferences") },
+    { id: "contact", label: t("navContact") },
+  ] as const;
+
   return (
     <nav
       className={`site-nav transition-transform duration-300 ease-in-out ${
         heroRunwayComplete
-          ? "bg-[rgba(10,22,40,0.9)] backdrop-blur-md border-b border-white/8"
+          ? "bg-[rgba(10,10,8,0.92)] backdrop-blur-md border-b border-[rgba(184,151,90,0.15)]"
           : "bg-transparent border-transparent"
       }`}
       aria-label="Primary"
@@ -156,42 +164,20 @@ export default function Navbar() {
           className={`nav-links${isOpen ? " open" : ""}`}
           id="nav-links"
         >
-          <li>
-            <a
-              href="#home"
-              className={activeSection === "home" ? "active" : undefined}
-              onClick={handleNavClick}
-            >
-              {t("navHome")}
-            </a>
-          </li>
-          <li>
-            <a
-              href="#services"
-              className={activeSection === "services" ? "active" : undefined}
-              onClick={handleNavClick}
-            >
-              {t("navServices")}
-            </a>
-          </li>
-          <li>
-            <a
-              href="#references"
-              className={activeSection === "references" ? "active" : undefined}
-              onClick={handleNavClick}
-            >
-              {t("navReferences")}
-            </a>
-          </li>
-          <li>
-            <a
-              href="#contact"
-              className={activeSection === "contact" ? "active" : undefined}
-              onClick={handleNavClick}
-            >
-              {t("navContact")}
-            </a>
-          </li>
+          {navItems.map((item) => (
+            <li key={item.id}>
+              <ComesInGoesOutUnderline
+                href={`#${item.id}`}
+                direction="left"
+                active={activeSection === item.id}
+                onClick={handleNavClick}
+                className="nav-underline-link"
+                underlineClassName="bg-[#b8975a]"
+              >
+                {item.label}
+              </ComesInGoesOutUnderline>
+            </li>
+          ))}
           <li className="mobile-lang-row">
             <hr className="mobile-lang-divider" />
             <div
@@ -201,14 +187,17 @@ export default function Navbar() {
             >
               <button
                 type="button"
-                className={`lang-btn${lang === "en" ? " active" : ""}`}
+                className={`lang-link${lang === "en" ? " active" : ""}`}
                 onClick={() => handleLanguageChange("en")}
               >
                 EN
               </button>
+              <span aria-hidden="true" className="lang-separator">
+                |
+              </span>
               <button
                 type="button"
-                className={`lang-btn${lang === "sk" ? " active" : ""}`}
+                className={`lang-link${lang === "sk" ? " active" : ""}`}
                 onClick={() => handleLanguageChange("sk")}
               >
                 SK
@@ -220,14 +209,17 @@ export default function Navbar() {
         <div className="lang-switch" role="group" aria-label="Language switcher">
           <button
             type="button"
-            className={`lang-btn${lang === "en" ? " active" : ""}`}
+            className={`lang-link${lang === "en" ? " active" : ""}`}
             onClick={() => handleLanguageChange("en")}
           >
             EN
           </button>
+          <span aria-hidden="true" className="lang-separator">
+            |
+          </span>
           <button
             type="button"
-            className={`lang-btn${lang === "sk" ? " active" : ""}`}
+            className={`lang-link${lang === "sk" ? " active" : ""}`}
             onClick={() => handleLanguageChange("sk")}
           >
             SK
