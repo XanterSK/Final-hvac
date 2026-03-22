@@ -1,15 +1,18 @@
 "use client";
 
-import { useEffect } from "react";
+import { type ReactNode, useEffect } from "react";
 import Contact from "@/components/Contact";
 import CookieBanner from "@/components/CookieBanner";
 import Footer from "@/components/Footer";
-import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import References from "@/components/References";
 import Services from "@/components/Services";
 
-export default function SiteShell() {
+type SiteShellProps = {
+  hero: ReactNode;
+};
+
+export default function SiteShell({ hero }: SiteShellProps) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -41,7 +44,7 @@ export default function SiteShell() {
   return (
     <>
       <Navbar />
-      <Hero />
+      {hero}
       <div className="section-divider divider-hero-services" aria-hidden="true" />
       <Services />
       <div

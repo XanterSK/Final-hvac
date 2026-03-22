@@ -10,12 +10,14 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] =
     useState<(typeof sectionIds)[number]>("home");
+  const [heroNavVisible, setHeroNavVisible] = useState(false);
+  const [heroRunwayComplete, setHeroRunwayComplete] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [isScrolled, setIsScrolled] = useState(false);
   const hasScrolledRef = useRef(false);
   const navLinksRef = useRef<HTMLUListElement | null>(null);
   const hamburgerRef = useRef<HTMLButtonElement | null>(null);
+  const shouldShowNavbar = heroRunwayComplete ? heroNavVisible && isVisible : heroNavVisible;
 
   useEffect(() => {
     setActiveSection("home");
@@ -72,11 +74,31 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    const handleHeroIntroState = (
+      event: CustomEvent<{ navbarVisible: boolean; runwayComplete: boolean }>,
+    ) => {
+      setHeroNavVisible(event.detail.navbarVisible);
+      setHeroRunwayComplete(event.detail.runwayComplete);
+    };
+
+    window.addEventListener(
+      "hero-intro-state",
+      handleHeroIntroState as EventListener,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "hero-intro-state",
+        handleHeroIntroState as EventListener,
+      );
+    };
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
       hasScrolledRef.current = true;
-      setIsScrolled(currentScrollY > 50);
 
       if (currentScrollY < 10) {
         setIsVisible(true);
@@ -111,13 +133,17 @@ export default function Navbar() {
   return (
     <nav
       className={`site-nav transition-transform duration-300 ease-in-out ${
-        isScrolled
+        heroRunwayComplete
           ? "bg-[rgba(10,22,40,0.9)] backdrop-blur-md border-b border-white/8"
           : "bg-transparent border-transparent"
       }`}
       aria-label="Primary"
       style={{
-        transform: isVisible ? "translateY(0)" : "translateY(-100%)",
+        transform: shouldShowNavbar ? "translateY(0)" : "translateY(-100%)",
+        opacity: heroNavVisible ? 1 : 0,
+        pointerEvents: heroNavVisible ? "auto" : "none",
+        transition:
+          "transform 0.3s ease, opacity 0.45s ease, background-color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease",
       }}
     >
       <div className="container nav-inner">
