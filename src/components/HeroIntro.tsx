@@ -57,6 +57,17 @@ export default function HeroIntro() {
   const frameRef = useRef<number | null>(null);
   const progressRef = useRef(0);
   const [progress, setProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const syncMobileState = () => setIsMobile(mediaQuery.matches);
+
+    syncMobileState();
+    mediaQuery.addEventListener("change", syncMobileState);
+
+    return () => mediaQuery.removeEventListener("change", syncMobileState);
+  }, []);
 
   useEffect(() => {
     const dispatchNavbarState = (navbarVisible: boolean, runwayComplete: boolean) => {
@@ -66,6 +77,19 @@ export default function HeroIntro() {
         }),
       );
     };
+
+    if (isMobile === null) {
+      return;
+    }
+
+    if (isMobile) {
+      setProgress(1);
+      dispatchNavbarState(true, true);
+
+      return () => {
+        dispatchNavbarState(false, false);
+      };
+    }
 
     const updateProgress = () => {
       frameRef.current = null;
@@ -146,7 +170,7 @@ export default function HeroIntro() {
       videoRef.current?.removeEventListener("loadeddata", handleVideoReady);
       dispatchNavbarState(false, false);
     };
-  }, []);
+  }, [isMobile]);
 
   const videoOpacity = 0.55 * rangeProgress(progress, 0.08, 0.18);
   const introQuotes = t("heroQuotePhrases").slice(1, 3);
@@ -159,6 +183,61 @@ export default function HeroIntro() {
 
   function handleLanguageChange(nextLanguage: Language) {
     setLang(nextLanguage);
+  }
+
+  if (isMobile !== false) {
+    return (
+      <section
+        id="home"
+        style={{
+          minHeight: "100svh",
+          background: "#000",
+          paddingTop: "var(--nav-height)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            width: "min(1100px, calc(100% - 2rem))",
+            display: "grid",
+            justifyItems: "center",
+            gap: "0.75rem",
+            textAlign: "center",
+            padding: "3rem 0 2rem",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: 'var(--font-bebas), "Arial Narrow", sans-serif',
+              fontSize: "clamp(1.45rem, 5vw, 2.2rem)",
+              fontWeight: 400,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: TEXT,
+            }}
+          >
+            {t("heroTitlePrefix")}
+          </span>
+          <span
+            style={{
+              fontFamily: 'var(--font-bebas), "Arial Narrow", sans-serif',
+              fontSize: "clamp(2.6rem, 12vw, 4.8rem)",
+              fontWeight: 400,
+              letterSpacing: "0.14em",
+              lineHeight: 1,
+              textTransform: "uppercase",
+              color: TEXT,
+              paddingLeft: "0.14em",
+              textShadow: "0 12px 40px rgba(0, 0, 0, 0.5)",
+            }}
+          >
+            {t("heroTitleSuffix")}
+          </span>
+        </div>
+      </section>
+    );
   }
 
   return (
