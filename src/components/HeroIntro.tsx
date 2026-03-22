@@ -155,7 +155,7 @@ export default function HeroIntro() {
     [0.46, 0.71],
   ];
   const companyReveal = rangeProgress(progress, 0.72, 0.9);
-  const introLangOpacity = 1 - companyReveal;
+  const introLanguageVisible = progress < 0.78;
 
   function handleLanguageChange(nextLanguage: Language) {
     setLang(nextLanguage);
@@ -230,27 +230,33 @@ export default function HeroIntro() {
               right: "1.35rem",
               display: "inline-flex",
               alignItems: "center",
-              gap: "0.2rem",
-              padding: "0.2rem",
-              border: "1px solid rgba(255,255,255,0.3)",
+              gap: "0.55rem",
+              padding: "0.45rem 0.65rem",
+              border: "1px solid rgba(184,151,90,0.2)",
               borderRadius: "999px",
-              background: "rgba(0,0,0,0.18)",
+              background: "rgba(0,0,0,0.28)",
               backdropFilter: "blur(8px)",
-              opacity: introLangOpacity,
-              pointerEvents: introLangOpacity > 0.08 ? "auto" : "none",
-              transition: "opacity 0.3s ease",
+              zIndex: 5,
+              opacity: introLanguageVisible ? 1 : 0,
+              pointerEvents: introLanguageVisible ? "auto" : "none",
+              transition: "opacity 0.25s ease",
             }}
           >
             <button
               type="button"
-              className={`lang-btn${lang === "en" ? " active" : ""}`}
+              aria-pressed={lang === "en"}
+              className={`lang-link${lang === "en" ? " active" : ""}`}
               onClick={() => handleLanguageChange("en")}
             >
               EN
             </button>
+            <span aria-hidden="true" className="lang-separator">
+              |
+            </span>
             <button
               type="button"
-              className={`lang-btn${lang === "sk" ? " active" : ""}`}
+              aria-pressed={lang === "sk"}
+              className={`lang-link${lang === "sk" ? " active" : ""}`}
               onClick={() => handleLanguageChange("sk")}
             >
               SK
