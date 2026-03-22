@@ -60,13 +60,14 @@ export default function HeroIntro() {
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const syncMobileState = () => setIsMobile(mediaQuery.matches);
+    const detectMobile = () => {
+      setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
+    };
 
-    syncMobileState();
-    mediaQuery.addEventListener("change", syncMobileState);
+    detectMobile();
+    window.addEventListener("resize", detectMobile);
 
-    return () => mediaQuery.removeEventListener("change", syncMobileState);
+    return () => window.removeEventListener("resize", detectMobile);
   }, []);
 
   useEffect(() => {
@@ -77,19 +78,6 @@ export default function HeroIntro() {
         }),
       );
     };
-
-    if (isMobile === null) {
-      return;
-    }
-
-    if (isMobile) {
-      setProgress(1);
-      dispatchNavbarState(true, true);
-
-      return () => {
-        dispatchNavbarState(false, false);
-      };
-    }
 
     const updateProgress = () => {
       frameRef.current = null;
@@ -117,6 +105,7 @@ export default function HeroIntro() {
       const video = videoRef.current;
 
       if (
+        !isMobile &&
         video &&
         video.readyState >= 2 &&
         Number.isFinite(video.duration) &&
@@ -156,8 +145,11 @@ export default function HeroIntro() {
 
     window.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
-    videoRef.current?.addEventListener("loadedmetadata", handleVideoReady);
-    videoRef.current?.addEventListener("loadeddata", handleVideoReady);
+
+    if (!isMobile) {
+      videoRef.current?.addEventListener("loadedmetadata", handleVideoReady);
+      videoRef.current?.addEventListener("loadeddata", handleVideoReady);
+    }
 
     return () => {
       if (frameRef.current !== null) {
@@ -166,8 +158,12 @@ export default function HeroIntro() {
 
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
-      videoRef.current?.removeEventListener("loadedmetadata", handleVideoReady);
-      videoRef.current?.removeEventListener("loadeddata", handleVideoReady);
+
+      if (!isMobile) {
+        videoRef.current?.removeEventListener("loadedmetadata", handleVideoReady);
+        videoRef.current?.removeEventListener("loadeddata", handleVideoReady);
+      }
+
       dispatchNavbarState(false, false);
     };
   }, [isMobile]);
@@ -183,61 +179,6 @@ export default function HeroIntro() {
 
   function handleLanguageChange(nextLanguage: Language) {
     setLang(nextLanguage);
-  }
-
-  if (isMobile !== false) {
-    return (
-      <section
-        id="home"
-        style={{
-          minHeight: "100svh",
-          background: "#000",
-          paddingTop: "var(--nav-height)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          style={{
-            width: "min(1100px, calc(100% - 2rem))",
-            display: "grid",
-            justifyItems: "center",
-            gap: "0.75rem",
-            textAlign: "center",
-            padding: "3rem 0 2rem",
-          }}
-        >
-          <span
-            style={{
-              fontFamily: 'var(--font-bebas), "Arial Narrow", sans-serif',
-              fontSize: "clamp(1.45rem, 5vw, 2.2rem)",
-              fontWeight: 400,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: TEXT,
-            }}
-          >
-            {t("heroTitlePrefix")}
-          </span>
-          <span
-            style={{
-              fontFamily: 'var(--font-bebas), "Arial Narrow", sans-serif',
-              fontSize: "clamp(2.6rem, 12vw, 4.8rem)",
-              fontWeight: 400,
-              letterSpacing: "0.14em",
-              lineHeight: 1,
-              textTransform: "uppercase",
-              color: TEXT,
-              paddingLeft: "0.14em",
-              textShadow: "0 12px 40px rgba(0, 0, 0, 0.5)",
-            }}
-          >
-            {t("heroTitleSuffix")}
-          </span>
-        </div>
-      </section>
-    );
   }
 
   return (
@@ -262,23 +203,42 @@ export default function HeroIntro() {
           zIndex: 2,
         }}
       >
-        <video
-          ref={videoRef}
-          muted
-          playsInline
-          preload="auto"
-          src="/video/hero.mp4"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            opacity: videoOpacity,
-            transform: "translateZ(0) scale(1.02)",
-            willChange: "opacity, transform",
-          }}
-        />
+        {isMobile ? (
+          <img
+            src="/video/hero-poster.jpg"
+            alt=""
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              opacity: videoOpacity,
+              transform: "translateZ(0) scale(1.02)",
+              willChange: "opacity, transform",
+            }}
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            muted
+            playsInline
+            preload="auto"
+            poster="/video/hero-poster.jpg"
+            src="/video/hero.mp4"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              opacity: videoOpacity,
+              transform: "translateZ(0) scale(1.02)",
+              willChange: "opacity, transform",
+            }}
+          />
+        )}
 
         <div
           aria-hidden="true"
