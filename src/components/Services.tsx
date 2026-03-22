@@ -4,12 +4,9 @@ import { useEffect, useState, type MouseEvent } from "react";
 import { Settings, Snowflake } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
-const authorisationIcons = ["✓", "🛡", "✓", "🛡", "✓", "🛡", "✓", "🛡", "✓"];
-
 export default function Services() {
   const { t } = useLanguage();
   const [activeItem, setActiveItem] = useState<string | null>(null);
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
   const consultingItems = [
     {
@@ -45,18 +42,6 @@ export default function Services() {
       label: t("servicesProjectItem3"),
       description: t("servicesProjectItem3Desc"),
     },
-  ];
-
-  const authorisations = [
-    t("auth1"),
-    t("auth2"),
-    t("auth3"),
-    t("auth4"),
-    t("auth5"),
-    t("auth6"),
-    t("auth7"),
-    t("auth8"),
-    t("auth9"),
   ];
 
   useEffect(() => {
@@ -144,41 +129,50 @@ export default function Services() {
           </article>
         </div>
 
-        <div className={`accordion reveal${isAccordionOpen ? " is-open" : ""}`}>
-          <button
-            className="accordion-toggle"
-            type="button"
-            aria-expanded={isAccordionOpen}
-            aria-controls="authorisations-panel"
-            onClick={() => setIsAccordionOpen((current) => !current)}
-          >
-            <span>{t("authBubble")}</span>
-            <span className="accordion-arrow" aria-hidden="true">
-              ▼
-            </span>
-          </button>
-          <div
-            className="accordion-panel"
-            id="authorisations-panel"
-            aria-hidden={!isAccordionOpen}
-            style={{
-              maxHeight: isAccordionOpen ? "2000px" : "0px",
-              overflow: "hidden",
-              transition: "max-height 0.4s ease",
-            }}
-          >
-            <div className="accordion-card">
-              <ul className="auth-list">
-                {authorisations.map((authorisation, index) => (
-                  <li key={`${authorisation}-${index}`}>
-                    <span className="auth-icon">{authorisationIcons[index]}</span>
-                    <span>{authorisation}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <details className="auth-accordion reveal">
+          <summary className="auth-accordion-toggle">
+            <span data-i18n="authBubble">{t("authBubble")}</span>
+            <span className="auth-accordion-arrow">▼</span>
+          </summary>
+          <div className="auth-accordion-content">
+            <ul>
+              <li>
+                Construction manager - Technical, technological and energy
+                building equipment - electrical equipment
+              </li>
+              <li>Electrical engineer for work and operation management</li>
+              <li>
+                Construction manager - Technical, technological and energy
+                building equipment - sanitary technical equipment and
+                installations, heating and air conditioning equipment, heating
+                equipment, gas equipment
+              </li>
+              <li>
+                §24 Certificate 0005-IBA/2021 EZ RT E1A,B - In the range: E1B-
+                technical equipment without voltage limitation, including
+                lightning conductors in buildings with a risk of explosion
+              </li>
+              <li>§24 Certificate 1194/4/2008-EZ-E-E2-A</li>
+              <li>
+                Certificate for the engineering of specified technical
+                electrical equipment according to EN ISO / IEC 17024-2012
+              </li>
+              <li>
+                Operation of specified technical pressure equipment § 17 of
+                Decree No. 508 Z.z. - boilers operation V. Class
+              </li>
+              <li>
+                Certificate of professional qualification in heat-power
+                engineering according to § 4 par. 4 of Act No. 657/2004 /
+                44-1027
+              </li>
+              <li>
+                Authorisation for installation and engineering - EPS and HSP
+                Bosch, ESSER
+              </li>
+            </ul>
           </div>
-        </div>
+        </details>
       </div>
     </section>
   );

@@ -42,9 +42,19 @@ export default function SiteShell() {
     <>
       <Navbar />
       <Hero />
+      <div className="section-divider divider-hero-services" aria-hidden="true" />
       <Services />
+      <div
+        className="section-divider divider-services-references"
+        aria-hidden="true"
+      />
       <References />
+      <div
+        className="section-divider divider-references-contact"
+        aria-hidden="true"
+      />
       <Contact />
+      <div className="section-divider divider-contact-footer" aria-hidden="true" />
       <Footer />
       <CookieBanner />
     </>

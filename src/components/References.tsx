@@ -1,49 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import FeatureCarousel from "@/components/ui/feature-carousel";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function References() {
   const { t } = useLanguage();
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
-
-  const experienceItems = [
-    t("experience1"),
-    t("experience2"),
-    t("experience3"),
-    t("experience4"),
-    t("experience5"),
-    t("experience6"),
-    t("experience7"),
-    t("experience8"),
-    t("experience9"),
-    t("experience10"),
-    t("experience11"),
-    t("experience12"),
-    t("experience13"),
-    t("experience14"),
-    t("experience15"),
-    t("experience16"),
-    t("experience17"),
-    t("experience18"),
-    t("experience19"),
-    t("experience20"),
-    t("experience21"),
-    t("experience22"),
-    t("experience23"),
-    t("experience24"),
-    t("experience25"),
-    t("experience26"),
-    t("experience27"),
-    t("experience28"),
-    t("experience29"),
-    t("experience30"),
-    t("experience31"),
-    t("experience32"),
-    t("experience33"),
-    t("experience34"),
-  ];
 
   return (
     <section id="references" className="section">
@@ -53,40 +14,59 @@ export default function References() {
         <h3 className="subsection-title reveal">
           {t("referencesProjectsFrom2017")}
         </h3>
-        <FeatureCarousel />
-
-        <div className={`accordion reveal${isAccordionOpen ? " is-open" : ""}`}>
-          <button
-            className="accordion-toggle"
-            type="button"
-            aria-expanded={isAccordionOpen}
-            aria-controls="experience-panel"
-            onClick={() => setIsAccordionOpen((current) => !current)}
-          >
-            <span>{t("referencesExperienceBubble")}</span>
-            <span className="accordion-arrow" aria-hidden="true">
-              ▼
-            </span>
-          </button>
-          <div
-            className="accordion-panel"
-            id="experience-panel"
-            aria-hidden={!isAccordionOpen}
-            style={{
-              maxHeight: isAccordionOpen ? "2000px" : "0px",
-              overflow: "hidden",
-              transition: "max-height 0.4s ease",
-            }}
-          >
-            <div className="accordion-card">
-              <ul className="experience-list">
-                {experienceItems.map((experience, index) => (
-                  <li key={`${experience}-${index}`}>{experience}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
+        <div className="reveal">
+          <FeatureCarousel />
         </div>
+
+        <details className="auth-accordion reveal">
+          <summary className="auth-accordion-toggle">
+            <span data-i18n="referencesExperienceBubble">
+              {t("referencesExperienceBubble")}
+            </span>
+            <span className="auth-accordion-arrow">▼</span>
+          </summary>
+          <div className="auth-accordion-content">
+            <ul>
+              <li>Slovak Philharmonic - Reduta</li>
+              <li>Social insurance company Poprad</li>
+              <li>Slovak Technical University Trnava</li>
+              <li>Minebea</li>
+              <li>State tangible reserves administration</li>
+              <li>Polyfunctional object Dunajská</li>
+              <li>Polyfunctional object Rozadol</li>
+              <li>Aupark Tower Bratislava</li>
+              <li>Apollo Business Center II Bratislava</li>
+              <li>Logistic center Svätý Jur</li>
+              <li>Logistic center Malý Šariš</li>
+              <li>
+                Polyfunctional object - manufacture and warehouse Rača -
+                Administrative building
+              </li>
+              <li>Gdanski Business Center I Warsaw, PL</li>
+              <li>Aupark Tower Košice</li>
+              <li>Logistic center Lovosice, CZ</li>
+              <li>River Garden Office I Praha, CZ</li>
+              <li>Vaci Corner Offices Budapest, HU</li>
+              <li>Metronom Business Center Praha, CZ</li>
+              <li>Postepu 14 Warsaw, PL</li>
+              <li>Gdanski Business Center II Warsaw, PL</li>
+              <li>33 Central, London, UK</li>
+              <li>Aupark Shopping center, Hradec Králové, CZ</li>
+              <li>Twin City, Bratislava</li>
+              <li>West Station I-II, Warsaw, PL</li>
+              <li>Parking house Aupark</li>
+              <li>Aupark Foodcourt</li>
+              <li>Aupark Piešťany</li>
+              <li>Aupark Žilina</li>
+              <li>City Business Center III-V</li>
+              <li>Aupark Košice</li>
+              <li>Logistic center Mošnov, CZ</li>
+              <li>River Garden II, III Praha, CZ</li>
+              <li>Konstruktorska Business Center Warsaw, PL</li>
+              <li>Forum Business Center I Bratislava</li>
+            </ul>
+          </div>
+        </details>
       </div>
     </section>
   );

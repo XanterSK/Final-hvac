@@ -112,7 +112,7 @@ export default function Navbar() {
     <nav
       className={`site-nav transition-transform duration-300 ease-in-out ${
         isScrolled
-          ? "bg-[rgba(13,31,60,0.85)] backdrop-blur-md border-b border-white/8"
+          ? "bg-[rgba(10,22,40,0.9)] backdrop-blur-md border-b border-white/8"
           : "bg-transparent border-transparent"
       }`}
       aria-label="Primary"
