@@ -74,7 +74,8 @@ export default function Contact() {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2660.5945917072477!2d17.1558050120599!3d48.17589427112789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476c8ee7c0b90979%3A0x9bdbc5f64326d77e!2s11%2C%20Tylova%201042%2C%20831%2004%20Bratislava%2C%20Slovensko!5e0!3m2!1ssk!2sca!4v1773601490654!5m2!1ssk!2sca"
               width="600"
               height="450"
-              style={{ border: 0 }}
+              className="rounded-2xl w-full my-6 opacity-80 mix-blend-lighten"
+              style={{ border: 0, filter: "grayscale(100%) invert(95%) contrast(1.1) brightness(0.7) sepia(10%) hue-rotate(180deg)" }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -104,25 +105,77 @@ export default function Contact() {
                 noValidate
                 onSubmit={handleSubmit}
               >
-                <label htmlFor="name">{t("contactName")}</label>
-                <input id="name" name="name" type="text" autoComplete="name" required />
+                <div className="flex flex-col gap-8 mb-8">
+                  <div className="relative group">
+                    <input 
+                      id="name" 
+                      name="name" 
+                      type="text" 
+                      autoComplete="name" 
+                      required 
+                      className="w-full bg-transparent border-0 border-b border-white/20 text-white placeholder-transparent focus:ring-0 focus:border-[var(--accent)] py-3 pl-5 transition-all duration-300 peer focus:shadow-[0_4px_15px_-3px_rgba(184,151,90,0.5)] outline-none rounded-none"
+                      placeholder={t("contactName")}
+                    />
+                    <label 
+                      htmlFor="name" 
+                      className="absolute left-5 top-3 text-white/50 text-sm transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[var(--accent)] pointer-events-none"
+                    >
+                      {t("contactName")}
+                    </label>
+                  </div>
 
-                <label htmlFor="email">{t("contactEmail")}</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                />
+                  <div className="relative group">
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                      className="w-full bg-transparent border-0 border-b border-white/20 text-white placeholder-transparent focus:ring-0 focus:border-[var(--accent)] py-3 pl-5 transition-all duration-300 peer focus:shadow-[0_4px_15px_-3px_rgba(184,151,90,0.5)] outline-none rounded-none"
+                      placeholder={t("contactEmail")}
+                    />
+                    <label 
+                      htmlFor="email" 
+                      className="absolute left-5 top-3 text-white/50 text-sm transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[var(--accent)] pointer-events-none"
+                    >
+                      {t("contactEmail")}
+                    </label>
+                  </div>
 
-                <label htmlFor="subject">{t("contactSubject")}</label>
-                <input id="subject" name="subject" type="text" autoComplete="off" />
+                  <div className="relative group">
+                    <input 
+                      id="subject" 
+                      name="subject" 
+                      type="text" 
+                      autoComplete="off" 
+                      className="w-full bg-transparent border-0 border-b border-white/20 text-white placeholder-transparent focus:ring-0 focus:border-[var(--accent)] py-3 pl-5 transition-all duration-300 peer focus:shadow-[0_4px_15px_-3px_rgba(184,151,90,0.5)] outline-none rounded-none"
+                      placeholder={t("contactSubject")}
+                    />
+                    <label 
+                      htmlFor="subject" 
+                      className="absolute left-5 top-3 text-white/50 text-sm transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[var(--accent)] pointer-events-none"
+                    >
+                      {t("contactSubject")}
+                    </label>
+                  </div>
 
-                <label htmlFor="message">{t("contactMessage")}</label>
-                <textarea id="message" name="message" />
+                  <div className="relative group">
+                    <textarea 
+                      id="message" 
+                      name="message" 
+                      className="w-full bg-transparent border-0 border-b border-white/20 text-white placeholder-transparent focus:ring-0 focus:border-[var(--accent)] py-3 min-h-[120px] resize-none transition-all duration-300 peer focus:shadow-[0_4px_15px_-3px_rgba(184,151,90,0.5)] outline-none rounded-none"
+                      placeholder={t("contactMessage")}
+                    />
+                    <label 
+                      htmlFor="message" 
+                      className="absolute left-5 top-3 text-white/50 text-sm transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[var(--accent)] pointer-events-none"
+                    >
+                      {t("contactMessage")}
+                    </label>
+                  </div>
+                </div>
 
-                <button type="submit" className="form-submit">
+                <button type="submit" className="form-submit bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-black font-bold py-4 px-10 rounded-full transition-all duration-300 hover:shadow-[0_0_20px_rgba(184,151,90,0.4)] hover:scale-105">
                   {t("contactSend")}
                 </button>
               </form>

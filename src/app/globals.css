@@ -35,6 +35,10 @@ body {
   background: var(--bg-primary);
 }
 
+h1, h2, h3, h4, h5, h6, .section-title, .subsection-title {
+  font-family: var(--font-bebas), "Arial Narrow", sans-serif !important;
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -75,19 +79,21 @@ a {
 }
 
 .section-title {
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-size: clamp(1.2rem, 2.1vw, 1.75rem);
   line-height: 1.2;
   margin-bottom: 2rem;
   color: var(--text-primary);
   font-weight: 700;
+  letter-spacing: 0.1em;
 }
 
 .subsection-title {
-  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  font-size: clamp(0.85rem, 1.5vw, 1.15rem);
   line-height: 1.3;
   margin-bottom: 1.25rem;
   color: var(--text-primary);
   font-weight: 600;
+  letter-spacing: 0.1em;
 }
 
 .site-nav {
@@ -456,7 +462,6 @@ a {
   display: flex;
   flex-direction: column;
   box-shadow: none;
-  min-height: 100%;
   transition: all 0.2s ease;
   backdrop-filter: blur(6px);
 }
@@ -589,7 +594,18 @@ details[open] .auth-accordion-arrow {
 }
 
 .auth-accordion-content {
+  margin-top: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, margin-top 0.4s ease;
+}
+
+details[open] .auth-accordion-content {
   margin-top: 0.9rem;
+  max-height: 2000px;
+}
+
+.auth-accordion-panel {
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--bg-card);
@@ -597,7 +613,7 @@ details[open] .auth-accordion-arrow {
   transition: all 0.2s ease;
 }
 
-.auth-accordion-content:hover {
+.auth-accordion-panel:hover {
   background: var(--bg-card-hover);
   border-color: rgba(184, 151, 90, 0.28);
 }
@@ -853,6 +869,7 @@ details[open] .auth-accordion-arrow {
 
 #contact {
   background: var(--bg-secondary);
+  padding-bottom: 2rem;
 }
 
 .contact-grid {
@@ -866,7 +883,7 @@ details[open] .auth-accordion-arrow {
 .form-panel {
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 1rem;
   background: var(--bg-card);
   display: flex;
   flex-direction: column;
@@ -935,7 +952,7 @@ details[open] .auth-accordion-arrow {
 }
 
 .contact-bottom {
-  margin-top: auto;
+  margin-top: 0.75rem;
 }
 
 .contact-divider {

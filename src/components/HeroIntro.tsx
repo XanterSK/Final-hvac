@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLanguage, type Language } from "@/context/LanguageContext";
 
-const GOLD = "#b8975a";
 const TEXT = "#f0ece4";
 
 function clamp(value: number, min = 0, max = 1) {
@@ -83,10 +82,7 @@ export default function HeroIntro() {
       frameRef.current = null;
 
       const runway = runwayRef.current;
-
-      if (!runway) {
-        return;
-      }
+      if (!runway) return;
 
       const scrollDistance = Math.max(
         runway.offsetHeight - window.innerHeight,
@@ -103,7 +99,6 @@ export default function HeroIntro() {
       dispatchNavbarState(clampedProgress >= 0.78, rawProgress >= 1);
 
       const video = videoRef.current;
-
       if (
         !isMobile &&
         video &&
@@ -112,7 +107,6 @@ export default function HeroIntro() {
         video.duration > 0
       ) {
         const nextTime = clampedProgress * video.duration;
-
         if (Math.abs(video.currentTime - nextTime) > 0.06) {
           try {
             video.currentTime = Math.min(nextTime, video.duration - 0.05);
@@ -124,20 +118,13 @@ export default function HeroIntro() {
     };
 
     const requestUpdate = () => {
-      if (frameRef.current !== null) {
-        return;
-      }
-
+      if (frameRef.current !== null) return;
       frameRef.current = window.requestAnimationFrame(updateProgress);
     };
 
     const handleVideoReady = () => {
-      const video = videoRef.current;
-
-      if (video) {
-        video.pause();
-      }
-
+      if (!videoRef.current) return;
+      videoRef.current.pause();
       requestUpdate();
     };
 
@@ -159,15 +146,17 @@ export default function HeroIntro() {
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
 
-      if (!isMobile) {
-        videoRef.current?.removeEventListener("loadedmetadata", handleVideoReady);
-        videoRef.current?.removeEventListener("loadeddata", handleVideoReady);
+      const video = videoRef.current;
+      if (!isMobile && video) {
+        video.removeEventListener("loadedmetadata", handleVideoReady);
+        video.removeEventListener("loadeddata", handleVideoReady);
       }
 
       dispatchNavbarState(false, false);
     };
   }, [isMobile]);
 
+  // Video and sequence logic
   const videoOpacity = 0.55 * rangeProgress(progress, 0.08, 0.18);
   const introQuotes = t("heroQuotePhrases").slice(1, 3);
   const quoteWindows: Array<[number, number]> = [
@@ -190,6 +179,7 @@ export default function HeroIntro() {
         background: "#000",
         paddingTop: 0,
         overflow: "visible",
+        position: "relative",
       }}
     >
       <div
@@ -200,7 +190,6 @@ export default function HeroIntro() {
           minHeight: "100svh",
           overflow: "hidden",
           background: "#000",
-          zIndex: 2,
         }}
       >
         {isMobile ? (
@@ -275,7 +264,7 @@ export default function HeroIntro() {
               borderRadius: "999px",
               background: "rgba(0,0,0,0.28)",
               backdropFilter: "blur(8px)",
-              zIndex: 5,
+              zIndex: 15,
               opacity: introLanguageVisible ? 1 : 0,
               pointerEvents: introLanguageVisible ? "auto" : "none",
               transition: "opacity 0.25s ease",
@@ -283,7 +272,6 @@ export default function HeroIntro() {
           >
             <button
               type="button"
-              aria-pressed={lang === "en"}
               className={`lang-link${lang === "en" ? " active" : ""}`}
               onClick={() => handleLanguageChange("en")}
             >
@@ -294,7 +282,6 @@ export default function HeroIntro() {
             </span>
             <button
               type="button"
-              aria-pressed={lang === "sk"}
               className={`lang-link${lang === "sk" ? " active" : ""}`}
               onClick={() => handleLanguageChange("sk")}
             >
@@ -354,41 +341,23 @@ export default function HeroIntro() {
                 width: "min(1100px, calc(100% - 3rem))",
               }}
             >
-              <div
+              <h1
                 style={{
                   color: TEXT,
-                  display: "grid",
-                  gap: "0.35rem",
+                  fontFamily: 'var(--font-bebas), "Arial Narrow", sans-serif',
+                  fontSize: "clamp(2.8rem, 8vw, 6.5rem)",
+                  fontWeight: 400,
+                  letterSpacing: "0.16em",
+                  lineHeight: 1.02,
+                  textTransform: "uppercase",
+                  paddingLeft: "0.16em",
+                  textShadow: "0 12px 40px rgba(0, 0, 0, 0.5)",
                   textAlign: "center",
+                  margin: 0,
                 }}
               >
-                <span
-                  style={{
-                    fontFamily: 'var(--font-bebas), "Arial Narrow", sans-serif',
-                    fontSize: "clamp(1.7rem, 3vw, 2.8rem)",
-                    fontWeight: 400,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: TEXT,
-                  }}
-                >
-                  {t("heroTitlePrefix")}
-                </span>
-                <span
-                  style={{
-                    fontFamily: 'var(--font-bebas), "Arial Narrow", sans-serif',
-                    fontSize: "clamp(2.8rem, 8vw, 6.5rem)",
-                    fontWeight: 400,
-                    letterSpacing: "0.16em",
-                    lineHeight: 1.02,
-                    textTransform: "uppercase",
-                    paddingLeft: "0.16em",
-                    textShadow: "0 12px 40px rgba(0, 0, 0, 0.5)",
-                  }}
-                >
-                  {t("heroTitleSuffix")}
-                </span>
-              </div>
+                {t("heroTitleSuffix")}
+              </h1>
             </div>
           </div>
         </div>

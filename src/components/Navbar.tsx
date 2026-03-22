@@ -21,6 +21,7 @@ export default function Navbar() {
   const shouldShowNavbar = heroRunwayComplete ? heroNavVisible && isVisible : heroNavVisible;
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setActiveSection("home");
     hasScrolledRef.current = false;
 
@@ -148,8 +149,9 @@ export default function Navbar() {
       aria-label="Primary"
       style={{
         transform: shouldShowNavbar ? "translateY(0)" : "translateY(-100%)",
-        opacity: heroNavVisible ? 1 : 0,
-        pointerEvents: heroNavVisible ? "auto" : "none",
+        opacity: shouldShowNavbar ? 1 : 0,
+        pointerEvents: shouldShowNavbar ? "auto" : "none",
+        zIndex: 999,
         transition:
           "transform 0.3s ease, opacity 0.45s ease, background-color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease",
       }}

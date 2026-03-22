@@ -12,7 +12,9 @@ export default function Hero() {
   );
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPhraseIndex(0);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setQuoteState("entering");
   }, [lang]);
 

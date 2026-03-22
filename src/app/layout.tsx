@@ -34,7 +34,7 @@ export default function RootLayout({
       lang="en"
       className={`${manrope.variable} ${cormorantGaramond.variable} ${bebasNeue.variable} h-full antialiased`}
     >
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full overflow-x-hidden">{children}</body>
     </html>
   );
 }

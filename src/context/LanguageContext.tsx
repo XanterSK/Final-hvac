@@ -266,6 +266,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     const storedLanguage = window.localStorage.getItem(LANGUAGE_KEY);
 
     if (storedLanguage === "en" || storedLanguage === "sk") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLang(storedLanguage);
     }
   }, []);
