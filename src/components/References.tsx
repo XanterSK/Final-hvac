@@ -117,18 +117,20 @@ export default function References() {
             "linear-gradient(to bottom, transparent 0%, black 15%, black 100%)",
         }}
       >
-        <div className="absolute top-0 inset-x-0 z-20 h-[45vh] bg-gradient-to-b from-black via-black/60 to-transparent" />
-        <div className="absolute inset-0 z-10 shadow-[inset_0_0_200px_60px_rgba(0,0,0,0.9)]" />
-        <Image
-          key={activeProject}
-          src={projects[activeProject].image}
-          alt={projects[activeProject].label}
-          fill
-          sizes="100vw"
-          quality={100}
-          priority
-          className="bg-image object-cover object-center opacity-0"
-        />
+        <div className="relative h-full w-full overflow-hidden">
+          <div className="absolute top-0 inset-x-0 z-20 h-[45vh] bg-gradient-to-b from-black via-black/60 to-transparent" />
+          <div className="absolute inset-0 z-10 shadow-[inset_0_0_200px_60px_rgba(0,0,0,0.9)]" />
+          <Image
+            key={activeProject}
+            src={projects[activeProject].image}
+            alt={projects[activeProject].label}
+            fill
+            sizes="100vw"
+            quality={80}
+            loading="lazy"
+            className="bg-image object-cover object-center opacity-0"
+          />
+        </div>
       </div>
 
       <div className="container relative z-20 mx-auto mt-16 flex flex-1 flex-col px-4 lg:px-8">
