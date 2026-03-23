@@ -50,7 +50,7 @@ export default function References() {
     {
       id: "guthaus",
       label: t("projectGuthaus"),
-      image: "/photos/guthaus-latest.jpg",
+      image: "/photos/guthaus-current.jpg",
     },
     {
       id: "nivy-mall",
