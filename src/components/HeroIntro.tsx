@@ -57,6 +57,7 @@ export default function HeroIntro() {
   const progressRef = useRef(0);
   const [progress, setProgress] = useState(0);
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const [videoFailed, setVideoFailed] = useState(false);
 
   useEffect(() => {
     const detectMobile = () => {
@@ -192,7 +193,7 @@ export default function HeroIntro() {
           background: "#000",
         }}
       >
-        {isMobile ? (
+        {isMobile || videoFailed ? (
           <img
             src="/video/hero-poster.jpg"
             alt=""
@@ -216,6 +217,7 @@ export default function HeroIntro() {
             preload="auto"
             poster="/video/hero-poster.jpg"
             src="/video/hero.mp4"
+            onError={() => setVideoFailed(true)}
             style={{
               position: "absolute",
               inset: 0,
