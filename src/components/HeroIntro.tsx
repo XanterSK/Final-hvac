@@ -53,11 +53,17 @@ export default function HeroIntro() {
   const { lang, setLang, t } = useLanguage();
   const runwayRef = useRef<HTMLElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoReadyRef = useRef(false);
   const frameRef = useRef<number | null>(null);
   const progressRef = useRef(0);
   const [progress, setProgress] = useState(0);
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
+
+  useEffect(() => {
+    videoReadyRef.current = videoReady;
+  }, [videoReady]);
 
   useEffect(() => {
     const detectMobile = () => {
@@ -101,19 +107,22 @@ export default function HeroIntro() {
 
       const video = videoRef.current;
       if (
-        !isMobile &&
-        video &&
-        video.readyState >= 2 &&
-        Number.isFinite(video.duration) &&
-        video.duration > 0
+        isMobile ||
+        videoFailed ||
+        !videoReadyRef.current ||
+        !video ||
+        !Number.isFinite(video.duration) ||
+        video.duration <= 0
       ) {
-        const nextTime = clampedProgress * video.duration;
-        if (Math.abs(video.currentTime - nextTime) > 0.06) {
-          try {
-            video.currentTime = Math.min(nextTime, video.duration - 0.05);
-          } catch {
-            // Ignore seek errors while metadata is still settling.
-          }
+        return;
+      }
+
+      const nextTime = clampedProgress * video.duration;
+      if (Math.abs(video.currentTime - nextTime) > 0.06) {
+        try {
+          video.currentTime = Math.min(nextTime, video.duration - 0.05);
+        } catch {
+          // Ignore seek errors while metadata is still settling.
         }
       }
     };
@@ -123,9 +132,20 @@ export default function HeroIntro() {
       frameRef.current = window.requestAnimationFrame(updateProgress);
     };
 
-    const handleVideoReady = () => {
-      if (!videoRef.current) return;
-      videoRef.current.pause();
+    const handleVideoReady = async () => {
+      const video = videoRef.current;
+      if (!video) return;
+
+      videoReadyRef.current = true;
+      setVideoReady(true);
+
+      try {
+        await video.play();
+      } catch {
+        // Silently fail, scroll scrubbing still works.
+      }
+
+      video.pause();
       requestUpdate();
     };
 
@@ -135,8 +155,14 @@ export default function HeroIntro() {
     window.addEventListener("resize", requestUpdate);
 
     if (!isMobile) {
-      videoRef.current?.addEventListener("loadedmetadata", handleVideoReady);
-      videoRef.current?.addEventListener("loadeddata", handleVideoReady);
+      const video = videoRef.current;
+      if (video) {
+        videoReadyRef.current = false;
+        setVideoReady(false);
+        video.addEventListener("canplay", handleVideoReady);
+        video.addEventListener("loadeddata", handleVideoReady);
+        video.load();
+      }
     }
 
     return () => {
@@ -149,13 +175,13 @@ export default function HeroIntro() {
 
       const video = videoRef.current;
       if (!isMobile && video) {
-        video.removeEventListener("loadedmetadata", handleVideoReady);
+        video.removeEventListener("canplay", handleVideoReady);
         video.removeEventListener("loadeddata", handleVideoReady);
       }
 
       dispatchNavbarState(false, false);
     };
-  }, [isMobile]);
+  }, [isMobile, videoFailed]);
 
   // Video and sequence logic
   const videoOpacity = 0.55 * rangeProgress(progress, 0.08, 0.18);
@@ -217,7 +243,11 @@ export default function HeroIntro() {
             preload="auto"
             poster="/video/hero-poster.jpg"
             src="/video/hero.mp4"
-            onError={() => setVideoFailed(true)}
+            onError={() => {
+              videoReadyRef.current = false;
+              setVideoReady(false);
+              setVideoFailed(true);
+            }}
             style={{
               position: "absolute",
               inset: 0,
