@@ -3,69 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-
-const FEATURES = [
-  {
-    id: "nivy-tower",
-    label: "Nivy Tower",
-    image: "/photos/nivyTower-1366x2048.jpg",
-    description: "Residential and commercial tower, Bratislava",
-  },
-  {
-    id: "vydrica",
-    label: "Vydrica",
-    image: "/photos/vydrica.jpg",
-    description: "Bratislava suburb residential development",
-  },
-  {
-    id: "guthaus",
-    label: "Guthaus",
-    image: "/photos/guthaus.png",
-    description: "Premium residential complex, Bratislava",
-  },
-  {
-    id: "nivy-mall",
-    label: "Nivy Mall",
-    image: "/photos/Stanica_Nivy_1-1-1024x768.webp",
-    description: "Major commercial hub, Bratislava",
-  },
-  {
-    id: "einpark",
-    label: "Einpark",
-    image: "/photos/einpark2.jpg",
-    description: "Residence and administrative building",
-  },
-  {
-    id: "blumental",
-    label: "Blumental",
-    image: "/photos/blumental1.jpg",
-    description: "Residence and administrative building, Bratislava",
-  },
-  {
-    id: "new-apollo",
-    label: "New Apollo",
-    image: "/photos/Kvartet (Ljubljana) – rezidence · New Apollo · Stengl Campus.jpg",
-    description: "Modern office building, Bratislava",
-  },
-  {
-    id: "stengl",
-    label: "Stengl Campus",
-    image: "/photos/Kvartet (Ljubljana) – rezidence · New Apollo · Stengl Campus.jpg",
-    description: "Campus development, Bratislava",
-  },
-  {
-    id: "kolisky",
-    label: "BD Kolísky",
-    image: "/photos/sebolichy.sk:en:portfolio-item:kolisky-zahorska-bystrica:.jpg.jpg",
-    description: "Award-winning residential complex, Bratislava",
-  },
-  {
-    id: "volkswagen",
-    label: "Volkswagen LOZ III",
-    image: "/photos/Logistics center LOZ III – Volkswagen Bratislava.jpg",
-    description: "Logistics center, Volkswagen Bratislava",
-  },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 const AUTO_PLAY_INTERVAL = 5000;
 const ITEM_HEIGHT = 65;
@@ -76,18 +14,72 @@ const wrap = (min: number, max: number, v: number) => {
 };
 
 export function FeatureCarousel() {
+  const { t } = useLanguage();
   const [step, setStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
+  const features = [
+    {
+      id: "nivy-tower",
+      label: t("projectNivyTower"),
+      image: "/photos/nivyTower-1366x2048.jpg",
+    },
+    {
+      id: "vydrica",
+      label: t("projectVydrica"),
+      image: "/photos/vydrica.jpg",
+    },
+    {
+      id: "guthaus",
+      label: t("projectGuthaus"),
+      image: "/photos/guthaus.png",
+    },
+    {
+      id: "nivy-mall",
+      label: t("projectNivyMall"),
+      image: "/photos/Stanica_Nivy_1-1-1024x768.webp",
+    },
+    {
+      id: "einpark",
+      label: t("projectEinpark"),
+      image: "/photos/einpark2.jpg",
+    },
+    {
+      id: "blumental",
+      label: t("projectBlumental"),
+      image: "/photos/blumental1.jpg",
+    },
+    {
+      id: "new-apollo",
+      label: t("projectNewApollo"),
+      image: "/photos/Kvartet (Ljubljana) – rezidence · New Apollo · Stengl Campus.jpg",
+    },
+    {
+      id: "stengl",
+      label: t("projectStenglCampus"),
+      image: "/photos/Kvartet (Ljubljana) – rezidence · New Apollo · Stengl Campus.jpg",
+    },
+    {
+      id: "kolisky",
+      label: t("projectKolisky"),
+      image: "/photos/sebolichy.sk:en:portfolio-item:kolisky-zahorska-bystrica:.jpg.jpg",
+    },
+    {
+      id: "volkswagen",
+      label: t("projectVolkswagenLoz"),
+      image: "/photos/Logistics center LOZ III – Volkswagen Bratislava.jpg",
+    },
+  ];
+
   const currentIndex =
-    ((step % FEATURES.length) + FEATURES.length) % FEATURES.length;
+    ((step % features.length) + features.length) % features.length;
 
   const nextStep = useCallback(() => {
     setStep((prev) => prev + 1);
   }, []);
 
   const handleChipClick = (index: number) => {
-    const diff = (index - currentIndex + FEATURES.length) % FEATURES.length;
+    const diff = (index - currentIndex + features.length) % features.length;
     if (diff > 0) setStep((s) => s + diff);
   };
 
@@ -98,15 +90,15 @@ export function FeatureCarousel() {
   }, [nextStep, isPaused]);
 
   useEffect(() => {
-    FEATURES.forEach((feature) => {
+    features.forEach((feature) => {
       const image = new window.Image();
       image.src = feature.image;
     });
-  }, []);
+  }, [features]);
 
   const getCardStatus = (index: number) => {
     const diff = index - currentIndex;
-    const len = FEATURES.length;
+    const len = features.length;
 
     let normalizedDiff = diff;
     if (diff > len / 2) normalizedDiff -= len;
@@ -129,12 +121,12 @@ export function FeatureCarousel() {
           <div className="absolute inset-x-0 top-0 z-40 h-12 bg-gradient-to-b from-[#111110] via-[#111110]/80 to-transparent md:h-20 lg:h-16" />
           <div className="absolute inset-x-0 bottom-0 z-40 h-12 bg-gradient-to-t from-[#111110] via-[#111110]/80 to-transparent md:h-20 lg:h-16" />
           <div className="relative w-full h-full flex items-center justify-center z-20">
-            {FEATURES.map((feature, index) => {
+            {features.map((feature, index) => {
               const isActive = index === currentIndex;
               const distance = index - currentIndex;
               const wrappedDistance = wrap(
-                -(FEATURES.length / 2),
-                FEATURES.length / 2,
+                -(features.length / 2),
+                features.length / 2,
                 distance
               );
 
@@ -179,7 +171,7 @@ export function FeatureCarousel() {
 
         <div className="relative flex min-h-[500px] flex-1 items-center justify-center overflow-hidden border-t border-[rgba(184,151,90,0.12)] bg-[#111110] px-6 py-16 md:min-h-[600px] md:px-12 md:py-24 lg:h-full lg:border-t-0 lg:border-l lg:px-10 lg:py-16">
           <div className="relative w-full max-w-[420px] aspect-[4/5] flex items-center justify-center">
-            {FEATURES.map((feature, index) => {
+            {features.map((feature, index) => {
               const status = getCardStatus(index);
               const isActive = status === "active";
               const isPrev = status === "prev";

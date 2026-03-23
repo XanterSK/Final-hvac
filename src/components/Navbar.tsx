@@ -146,7 +146,7 @@ export default function Navbar() {
           ? "bg-[rgba(10,10,8,0.92)] backdrop-blur-md border-b border-[rgba(184,151,90,0.15)]"
           : "bg-transparent border-transparent"
       }`}
-      aria-label="Primary"
+      aria-label={t("navPrimaryAria")}
       style={{
         transform: shouldShowNavbar ? "translateY(0)" : "translateY(-100%)",
         opacity: shouldShowNavbar ? 1 : 0,
@@ -185,7 +185,7 @@ export default function Navbar() {
             <div
               className="mobile-lang-switch"
               role="group"
-              aria-label="Language switcher"
+              aria-label={t("navLanguageAria")}
             >
               <button
                 type="button"
@@ -208,7 +208,7 @@ export default function Navbar() {
           </li>
         </ul>
 
-        <div className="lang-switch" role="group" aria-label="Language switcher">
+        <div className="lang-switch" role="group" aria-label={t("navLanguageAria")}>
           <button
             type="button"
             className={`lang-link${lang === "en" ? " active" : ""}`}
@@ -232,7 +232,7 @@ export default function Navbar() {
           ref={hamburgerRef}
           className="hamburger"
           type="button"
-          aria-label="Toggle navigation"
+          aria-label={t("navToggleAria")}
           aria-expanded={isOpen}
           aria-controls="nav-links"
           onClick={() => setIsOpen((current) => !current)}

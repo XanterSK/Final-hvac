@@ -5,7 +5,7 @@ import Contact from "@/components/Contact";
 import CookieBanner from "@/components/CookieBanner";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import References from "@/components/References";
+import References, { ExperienceMarquee } from "@/components/References";
 import Services from "@/components/Services";
 
 type SiteShellProps = {
@@ -52,10 +52,7 @@ export default function SiteShell({ hero }: SiteShellProps) {
         aria-hidden="true"
       />
       <References />
-      <div
-        className="section-divider divider-references-contact"
-        aria-hidden="true"
-      />
+      <ExperienceMarquee />
       <Contact />
       <div className="section-divider divider-contact-footer" aria-hidden="true" />
       <Footer />

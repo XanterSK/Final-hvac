@@ -16,6 +16,9 @@ export const translations = {
     navServices: "Services",
     navReferences: "References",
     navContact: "Contact",
+    navPrimaryAria: "Primary navigation",
+    navLanguageAria: "Language switcher",
+    navToggleAria: "Toggle navigation",
     heroTitlePrefix: "Comprehensive solution of",
     heroTitleSuffix: "HVAC and BMS",
     heroQuotePhrases: [
@@ -61,6 +64,8 @@ export const translations = {
     referencesProjectsFrom2017: "Projects from 2017 onwards",
     referencesExperienceBubble:
       "Previous experience before founding the company",
+    referencesExperienceTicker:
+      "Slovak Philharmonic – Reduta · Social insurance company Poprad · Slovak Technical University Trnava · Minebea · State tangible reserves administration · Polyfunctional object Dunajská · Polyfunctional object Rozadol · Aupark Tower Bratislava · Apollo Business Center II Bratislava · Logistic center Svätý Jur · Logistic center Malý Šariš · Polyfunctional object – manufacture and warehouse Rača · Gdanski Business Center I Warsaw, PL · Aupark Tower Košice · Logistic center Lovosice, CZ · River Garden Office I Praha, CZ · Vaci Corner Offices Budapest, HU · Metronom Business Center Praha, CZ · Postepu 14 Warsaw, PL · Gdanski Business Center II Warsaw, PL · 33 Central London, UK · Aupark Shopping center Hradec Králové, CZ · Twin City Bratislava · West Station I-II Warsaw, PL · Parking house Aupark · Aupark Foodcourt · Aupark Piešťany · Aupark Žilina · City Business Center III-V · Aupark Košice · Logistic center Mošnov, CZ · River Garden II-III Praha, CZ · Konstruktorska Business Center Warsaw, PL · Forum Business Center I Bratislava",
     projectNivyTower: "Nivy Tower",
     projectVydrica: "Vydrica",
     projectGuthaus: "Guthaus",
@@ -129,6 +134,9 @@ export const translations = {
     navServices: "Služby",
     navReferences: "Referencie",
     navContact: "Kontakt",
+    navPrimaryAria: "Hlavná navigácia",
+    navLanguageAria: "Prepínač jazyka",
+    navToggleAria: "Prepnúť navigáciu",
     heroTitlePrefix: "Komplexné riešenia v oblasti",
     heroTitleSuffix: "TZB a MaR",
     heroQuotePhrases: [
@@ -173,6 +181,8 @@ export const translations = {
     referencesTitle: "Referencie",
     referencesProjectsFrom2017: "Projekty od roku 2017",
     referencesExperienceBubble: "Skúsenosti pred založením spoločnosti",
+    referencesExperienceTicker:
+      "Slovenská filharmónia – Reduta · Sociálna poisťovňa Poprad · STU Trnava · Minebea · Správa štátnych hmotných rezerv · Polyfunkčný objekt Dunajská · Polyfunkčný objekt Rozadol · Aupark Tower Bratislava · Apollo Business Center II Bratislava · Logistické centrum Svätý Jur · Logistické centrum Malý Šariš · Polyfunkčný výrobno-skladovací areál Rača · Gdanski Business Center I Varšava, PL · Aupark Tower Košice · Logistické centrum Lovosice, CZ · River Garden Office I Praha, CZ · Vaci Corner Offices Budapešť, HU · Metronom Business Center Praha, CZ · Postepu 14 Varšava, PL · Gdanski Business Center II Varšava, PL · 33 Central Londýn, UK · Aupark Shopping center Hradec Králové, CZ · Twin City Bratislava · West Station I-II Varšava, PL · Parkovací dom Aupark · Aupark Foodcourt · Aupark Piešťany · Aupark Žilina · City Business Center III-V · Aupark Košice · Logistické centrum Mošnov, CZ · River Garden II-III Praha, CZ · Konstruktorska Business Center Varšava, PL · Forum Business Center I Bratislava",
     projectNivyTower: "Nivy Tower",
     projectVydrica: "Vydrica",
     projectGuthaus: "Guthaus",

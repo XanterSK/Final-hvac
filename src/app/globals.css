@@ -867,6 +867,26 @@ details[open] .auth-accordion-content {
   overflow-wrap: anywhere;
 }
 
+.experience-marquee {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.experience-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: experienceMarquee 80s linear infinite;
+}
+
+.experience-marquee-copy {
+  flex: 0 0 auto;
+  padding-right: 2rem;
+  color: var(--text-muted);
+  font: inherit;
+  letter-spacing: 0.04em;
+}
+
 #contact {
   background: var(--bg-secondary);
   padding-bottom: 2rem;
@@ -1193,5 +1213,14 @@ footer a:focus-visible {
   to {
     opacity: 0;
     transform: translateY(-24px);
+  }
+}
+
+@keyframes experienceMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }

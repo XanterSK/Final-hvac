@@ -269,6 +269,8 @@ export default function HeroIntro() {
               pointerEvents: introLanguageVisible ? "auto" : "none",
               transition: "opacity 0.25s ease",
             }}
+            role="group"
+            aria-label={t("navLanguageAria")}
           >
             <button
               type="button"
